@@ -1,0 +1,62 @@
+{
+  "name": "mackorn-cone-crusher",
+  "version": "0.0.3",
+  "description": "矿山破碎筛分生产线选型：给一张客户需求表 + 一个产量，得到带依据的设备选型、流程仿真、实测标定与方案书（DeepSeek Harness 插件 + MCP 服务器，零依赖）",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "main": "plugin/index.mjs",
+  "exports": {
+    ".": "./plugin/index.mjs",
+    "./mcp": "./plugin/mcp-server.mjs",
+    "./tools": "./plugin/lib/engine.mjs",
+    "./evolve": "./plugin/lib/evolve.mjs"
+  },
+  "bin": {
+    "mackorn-mcp": "plugin/mcp-server.mjs"
+  },
+  "files": [
+    "plugin/",
+    "skills/",
+    "knowledge/",
+    "tools/install.ps1",
+    "tools/verify.ps1",
+    "tools/uninstall.ps1",
+    "tools/demo_intake.mjs",
+    "tools/demo_proposal.mjs",
+    "VERSION",
+    "CHANGELOG.md",
+    "README.md",
+    "发布清单.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "selftest": "node tests/run.mjs",
+    "mcp:selftest": "node plugin/mcp-server.mjs --selftest",
+    "mcp:list": "node plugin/mcp-server.mjs --list",
+    "mcp": "node plugin/mcp-server.mjs"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "mcp",
+    "model-context-protocol",
+    "mackorn",
+    "cone-crusher",
+    "crushing-plant",
+    "mineral-processing",
+    "aggregate",
+    "equipment-selection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeifDai/MACKORN-cone-crusher-.git"
+  },
+  "homepage": "https://mackorn.cn",
+  "dsh": {
+    "note": "纯 Cordis 插件（不声明 dsh.bundle）：经 profile 或家目录 cordis.patch.yml 的 insert 行挂载，或按包名由 dsh plugin add 安装；技能由 $DSH_HOME/skills 文件系统发现根加载。"
+  }
+}
