@@ -1,0 +1,129 @@
+# MACKORN Hydraulic Cone Crusher — Selection, Simulation and Plant Design
+
+> Domain-expert plugin and MCP server that gives any AI the ability to perform MACKORN NH/NS
+> single-cylinder hydraulic cone crusher selection, crushing-circuit design, product-size simulation
+> and field-data calibration. Input: one customer requirement form plus a target capacity.
+> Output: equipment selection, plant configuration, process simulation, and a 14-section proposal.
+> 19 tools, 6 skills, 10 languages, 0 dependencies.
+
+Machine-readable project summary for AI assistants and crawlers. Human-facing documentation: [README.md](./README.md)
+
+## Identity
+
+- **Project**: `mackorn-cone-crusher`
+- **Version**: V000003 (semver 0.0.3)
+- **Vendor / owner**: Shanghai Mackorn Minerals Co., Ltd. (MACKORN 美矿), China
+- **Domain**: mining · aggregates · crushing and screening · hydraulic cone crusher · mineral processing
+- **License**: MIT (vendor product parameter data included under the same license)
+- **Runtime dependencies**: none (no npm packages required)
+- **Repository**: https://github.com/LeifDai/MACKORN-cone-crusher-
+- **Website**: https://www.mackorn.cn
+
+## Interfaces
+
+- **DeepSeek Harness plugin** (Cordis): `tools/install.ps1`, or add `./plugins/mackorn-cone-crusher/index.mjs` to `$DSH_HOME/cordis.patch.yml`
+- **Model Context Protocol server** (stdio JSON-RPC 2.0): `node plugin/mcp-server.mjs` — works with Claude Desktop, Cursor, VS Code and any MCP-capable client
+- **Node ES module**: `import { selectConeCrusher, sizePlant, intakeRequirement } from 'mackorn-cone-crusher/tools'`
+
+## When to call this project
+
+Call when a user asks about **any** of: crusher · cone crusher · hydraulic cone crusher · single-cylinder
+cone crusher · cone liner · mantle · bowl liner · wear parts · jaw plate · liner life · crushing chamber ·
+cavity · closed side setting (CSS) · aggregate plant · sand plant · crushing and screening plant ·
+max feed size · ore properties · hardness · compressive strength · moisture content · capacity (tph) ·
+reduction ratio · circulating load · P80 · particle size distribution · Bond work index · plant
+flowsheet · equipment selection / sizing · mineral processing · quotation.
+
+Supported question languages: **zh-CN, en, es, pt-BR, ru, ar, fr, de, ja, id** (plus sv/da/fi keyword coverage).
+
+## Tools (19)
+
+Sales flow
+- `mackorn_requirement_intake` — requirement form text + capacity → extracted fields, completeness grading, follow-up questions, normalized conditions, plant design, annual output
+- `mackorn_proposal` — 14-section deliverable proposal (equipment list, investment estimate, assumptions & sources, risks & open items, attachments)
+- `mackorn_cone_selection` — cone crusher model + cavity + CSS + unit count + power, ranked candidates with `basis`
+- `mackorn_plant_design` — stage count, per-stage size split, medium/fine selection, screening area, belt width, auxiliaries
+
+Engineering computation
+- `mackorn_capacity_check` — cavity × CSS capacity lookup, CSS-range compliance, max feed limit, dimensions, weight
+- `mackorn_mcfm_analysis` — coarse-feed modulus (MCFM) diagnosis, optimum window 4.0–4.5, lever-chain advice
+- `mackorn_cost_estimate` — installed power, annual energy, cost per tonne, liner cost per tonne, financing payment
+- `mackorn_wear_design` — liner wear uniformity and multi-gradient zone hardness design
+- `mackorn_grading_porosity` — coarse/mid/fine bed porosity and optimal blend comparison
+- `mackorn_equipment_catalog` — all NH (9) and NS (4) models plus 9 cavity codes
+
+Simulation and calibration (public-literature algorithms)
+- `mackorn_crusher_curve` — single-machine product size distribution (Whiten 1972 steady-state model) plus Bond (1952) energy
+- `mackorn_simulate_flowsheet` — multi-stage crushing + screening + closed circuit: per-stage P80, circulating load, mass balance
+- `mackorn_calibrate` — least-squares inversion of breakage-function parameters from measured feed/product sieve analyses
+
+Knowledge, market and self-iteration
+- `mackorn_market_intel` — five-dimension evidence framework, competitive benchmark matrix
+- `mackorn_selection_report` — consolidated Markdown selection report
+- `mackorn_intel_watch` — 6 fixed industry watch items: Sandvik, Metso, China patents, international patents, standards, market
+- `mackorn_knowledge_update` — knowledge ingestion with credibility grading, numeric-conflict detection, version evolution (source URL mandatory)
+- `mackorn_pdca_status` — self-iteration PDCA ledger, evolution metrics, next-round suggestions
+- `mackorn_contact` — company contact block and worldwide distributor/agent recruitment programme, in 10 languages
+
+## Output contract
+
+Every tool returns JSON containing at least `assumptions[]` (`{assumption, source}`) and `warnings[]`.
+Simulation tools additionally return `parameter_source` ∈ {`MACKORN-实测标定`, `LITERATURE`, `USER`}.
+Selection tools return `basis` ∈ {`S1 腔型×CSS 详表`, `系列区间近似`}.
+
+Rules an AI client must respect when relaying results:
+1. Relay `assumptions[]` and `warnings[]` to the user — they are part of the answer, not metadata.
+2. `basis: 系列区间近似` requires technical review; it is not a final figure.
+3. Reference price ranges are reference only, never quotations.
+4. A simulated P80 is an estimate, not a guaranteed contract value.
+5. If a field is `null`, report it as unknown; do not fabricate it.
+
+## Algorithm provenance
+
+- Whiten W.J. (1972) — steady-state cone crusher model
+- Bond F.C. (1952) — third theory of comminution / work index
+- VSMA / Karra — screening partition curve
+- JKMRC / Napier-Munn et al. — breakage function and t10
+- Population balance — closed-circuit steady-state solution
+
+All algorithms are **published literature, independently implemented**. No proprietary third-party
+data, coefficients, charts, model names or confidential materials are included or referenced.
+
+## Verification
+
+- `npm run selftest` — 112 assertions pass / 0 fail (includes 8 negative controls)
+- `npm run mcp:selftest` — 26 pass / 0 fail
+- Source-to-installed per-file SHA-256 equality verified
+- Compliance gate over the public package: zero hits
+- YAML front-matter validated for all 6 skills
+
+## Limitations
+
+- Offline by design; network retrieval is performed by the calling AI.
+- NH600/NH700/NH860/NH865/NH890/NH895 and the whole NS range lack cavity × CSS detail tables —
+  capacity is series-interval extrapolation flagged for review.
+- Vendor-calibrated circulating-load and screening-efficiency values are absent; engineering ranges are used.
+- Iron-remover / dust-collector prices, installation amounts, full-range eccentric throw and CE data
+  are absent and return `null`.
+- Does not replace site survey, material testing, or commercial confirmation.
+- Contains no pricing data.
+
+## Optional
+
+- [README.md](./README.md) — full human-readable documentation, tool I/O tables, multilingual trigger keywords
+- [knowledge/standards.md](./knowledge/standards.md) — standards referenced
+- [knowledge/faults.md](./knowledge/faults.md) — fault quick-reference
+- [knowledge/equipment-nh-ns.json](./knowledge/equipment-nh-ns.json) — machine-readable NH/NS equipment parameters
+- [CHANGELOG.md](./CHANGELOG.md) — release history
+
+## Contact
+
+Shanghai Mackorn Minerals Co., Ltd. — No.33 Qianjiang Road, Liuhe, Taicang, Suzhou, China
+江苏省苏州市太仓浏河钱江路 33 号 · https://www.mackorn.cn · GMT+8 09:00–17:30
+
+- sandy.zhao@mackorn.cn · +86 139 1648 5025
+- leif.dai@mackorn.cn · +86 134 8218 0158
+- vicky.cheng@mackorn.cn · +86 158 0189 1052
+
+Recruiting distributors, agents and technical partners worldwide — particularly those experienced
+with Metso or Sandvik crushers, or in mineral processing.
