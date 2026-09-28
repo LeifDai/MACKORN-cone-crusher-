@@ -1,0 +1,341 @@
+{
+  "mcfm_formula": [
+    {
+      "A": [
+        100,
+        88,
+        70,
+        52,
+        38,
+        26,
+        15,
+        8
+      ],
+      "M": 3.62
+    },
+    {
+      "A": [
+        100,
+        96,
+        90,
+        84,
+        76,
+        66,
+        55,
+        40
+      ],
+      "M": 4.783
+    },
+    {
+      "A": [
+        100,
+        70,
+        45,
+        30,
+        18,
+        10,
+        5,
+        2
+      ],
+      "M": 2.694
+    },
+    {
+      "A": [
+        100,
+        99,
+        98,
+        97,
+        96,
+        95,
+        94,
+        93
+      ],
+      "M": 4.0
+    }
+  ],
+  "mcfm_optimal_range": [
+    4.0,
+    4.5
+  ],
+  "mcfm_deviation": [
+    {
+      "M": 3.2,
+      "result": {
+        "level": "too_fine",
+        "deviation": 0.8
+      }
+    },
+    {
+      "M": 4.0,
+      "result": {
+        "level": "optimal",
+        "deviation": 0.0
+      }
+    },
+    {
+      "M": 4.25,
+      "result": {
+        "level": "optimal",
+        "deviation": 0.0
+      }
+    },
+    {
+      "M": 4.5,
+      "result": {
+        "level": "optimal",
+        "deviation": 0.0
+      }
+    },
+    {
+      "M": 5.6,
+      "result": {
+        "level": "too_coarse",
+        "deviation": 1.1
+      }
+    }
+  ],
+  "terminal_velocity": [
+    {
+      "d_p": 0.01,
+      "rho_p": 2650.0,
+      "v_t": 24.531
+    },
+    {
+      "d_p": 0.05,
+      "rho_p": 2650.0,
+      "v_t": 54.852
+    },
+    {
+      "d_p": 0.2,
+      "rho_p": 7800.0,
+      "v_t": 188.241
+    },
+    {
+      "d_p": 0.001,
+      "rho_p": 1.0,
+      "v_t": 0.0
+    }
+  ],
+  "velocity_uniformity_index": {
+    "A_uneven_feeding": {
+      "v": [
+        12.0,
+        8.5,
+        6.2,
+        4.5,
+        3.0,
+        2.1
+      ],
+      "result": {
+        "phi": 0.4406,
+        "mean": 6.05,
+        "std": 3.385,
+        "cv": 0.5594
+      }
+    },
+    "B_partial_homogenization": {
+      "v": [
+        9.0,
+        7.8,
+        6.5,
+        5.9,
+        5.2,
+        4.8
+      ],
+      "result": {
+        "phi": 0.7758,
+        "mean": 6.533,
+        "std": 1.465,
+        "cv": 0.2242
+      }
+    },
+    "C_target_uniformity": {
+      "v": [
+        6.0,
+        5.9,
+        6.1,
+        5.95,
+        6.05,
+        5.98
+      ],
+      "result": {
+        "phi": 0.9892,
+        "mean": 5.997,
+        "std": 0.065,
+        "cv": 0.0108
+      }
+    },
+    "single": {
+      "v": [
+        2.5
+      ],
+      "result": {
+        "phi": 1.0,
+        "mean": 2.5,
+        "std": 0.0,
+        "cv": 0.0
+      }
+    },
+    "zeros": {
+      "v": [
+        0.0,
+        0.0
+      ],
+      "result": {
+        "phi": 0.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "cv": 0.0
+      }
+    }
+  },
+  "collision_energy_loss": [
+    {
+      "rpm": 600,
+      "v_feed": 30,
+      "E": 197.4
+    },
+    {
+      "rpm": 900,
+      "v_feed": 25,
+      "E": 304.5
+    },
+    {
+      "rpm": 100,
+      "v_feed": 400,
+      "E": 0.0
+    }
+  ],
+  "wear_uniformity": [
+    {
+      "w": [
+        1.8,
+        2.5,
+        3.6,
+        2.2,
+        1.4
+      ],
+      "result": {
+        "uniformity": 0.6746,
+        "cv": 0.3254,
+        "max_min_ratio": 2.571
+      }
+    },
+    {
+      "w": [
+        2.0,
+        2.15,
+        2.05,
+        2.1,
+        1.95
+      ],
+      "result": {
+        "uniformity": 0.9655,
+        "cv": 0.0345,
+        "max_min_ratio": 1.103
+      }
+    },
+    {
+      "w": [
+        3.0
+      ],
+      "result": {
+        "uniformity": 1.0,
+        "cv": 0.0,
+        "max_min_ratio": 1.0
+      }
+    },
+    {
+      "w": [
+        0.0,
+        1.0
+      ],
+      "result": {
+        "uniformity": 0.0,
+        "cv": 1.0,
+        "max_min_ratio": "Infinity"
+      }
+    }
+  ],
+  "gradient_liner_design": [
+    {
+      "n": 5,
+      "base": 58.0,
+      "factor": 1.12,
+      "H": [
+        58.0,
+        64.96,
+        72.76,
+        81.49,
+        91.26
+      ]
+    },
+    {
+      "n": 3,
+      "base": 60.0,
+      "factor": 1.15,
+      "H": [
+        60.0,
+        69.0,
+        79.35
+      ]
+    },
+    {
+      "n": 6,
+      "base": 55.0,
+      "factor": 1.2,
+      "H": [
+        55.0,
+        66.0,
+        79.2,
+        95.04,
+        114.05,
+        136.86
+      ]
+    }
+  ],
+  "porosity_from_grading": [
+    {
+      "c": 0.8,
+      "m": 0.05,
+      "f": 0.15,
+      "phi": 0.405
+    },
+    {
+      "c": 0.6,
+      "m": 0.2,
+      "f": 0.2,
+      "phi": 0.36
+    },
+    {
+      "c": 0.5,
+      "m": 0.3,
+      "f": 0.2,
+      "phi": 0.33
+    },
+    {
+      "c": 0.0,
+      "m": 0.0,
+      "f": 0.0,
+      "phi": 1.0
+    },
+    {
+      "c": 1.0,
+      "m": 1.0,
+      "f": 1.0,
+      "phi": 0.325
+    }
+  ],
+  "optimal_grading": {
+    "coarse_frac": 0.5,
+    "mid_frac": 0.3,
+    "fine_frac": 0.2,
+    "porosity_min": 0.28,
+    "note": "中间粒级为最优孔隙率充填的关键，过多细粉反使密实度过高、应力传导失配"
+  },
+  "_meta": {
+    "source_python": "E:\\Mackorn\\02 产品-设计-研发\\99 DeepSeek研发模型\\DeepSeek找人模型\\20260924 Mackorn 矿山选矿科研模型V1.py",
+    "generator": "tests/golden/generate_python_golden.py",
+    "class": "MackornCoreTheory"
+  }
+}
