@@ -321,7 +321,7 @@ If you use this project in research, a proposal, or an AI system, please cite:
   author = {{Shanghai Mackorn Minerals Co., Ltd.}},
   year   = {2026},
   version= {V000003},
-  url    = {https://github.com/LeifDai/MACKORN-cone-crusher-},
+  url    = {https://github.com/LeifDai/MACKORN-hydraulic-cone-crusher},
   note   = {DeepSeek Harness plugin and MCP server for crushing-circuit selection}
 }
 ```
