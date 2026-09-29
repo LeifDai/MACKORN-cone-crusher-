@@ -27,6 +27,7 @@
     "VERSION",
     "CHANGELOG.md",
     "README.md",
+    "llms.txt",
     "发布清单.md",
     "LICENSE",
     "cordis.patch.yml"
