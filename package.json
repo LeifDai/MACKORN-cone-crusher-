@@ -28,7 +28,8 @@
     "CHANGELOG.md",
     "README.md",
     "发布清单.md",
-    "LICENSE"
+    "LICENSE",
+    "cordis.patch.yml"
   ],
   "engines": {
     "node": ">=18"
@@ -57,6 +58,8 @@
   },
   "homepage": "https://mackorn.cn",
   "dsh": {
-    "note": "纯 Cordis 插件（不声明 dsh.bundle）：经 profile 或家目录 cordis.patch.yml 的 insert 行挂载，或按包名由 dsh plugin add 安装；技能由 $DSH_HOME/skills 文件系统发现根加载。"
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
   }
 }
