@@ -19,6 +19,7 @@
     "plugin/",
     "skills/",
     "knowledge/",
+    "assets/",
     "tools/install.ps1",
     "tools/verify.ps1",
     "tools/uninstall.ps1",
