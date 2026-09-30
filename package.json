@@ -31,7 +31,8 @@
     "llms.txt",
     "发布清单.md",
     "LICENSE",
-    "cordis.patch.yml"
+    "cordis.patch.yml",
+    "server.json"
   ],
   "engines": {
     "node": ">=18"
