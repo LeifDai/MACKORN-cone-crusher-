@@ -123,6 +123,50 @@ This project addresses each with a mechanism:
 
 ---
 
+## Background and credibility
+
+This is not a wrapper around an API. It encodes engineering practice from 29 years in the crushing
+and screening industry, and every number in it is traceable to a stated source.
+
+| Period | Experience |
+|:---|:---|
+| 1993–1997 | **China University of Mining and Technology** — Mining Machinery Engineering, Metal Materials |
+| 1997–2004 | **XCMG (徐工集团)** — large-volume construction machinery manufacturing. Seven years of learning that volume production lives or dies on stability and service cost, and that cost-performance is the precondition, not the afterthought |
+| 2005–2007 | **Sandvik Mining and Construction China** — six months production training at Svedala, Sweden, then transferring that practice into the Shanghai plant; the full chain from material selection, smelting, manufacturing and quality control through assembly to after-sales, for hydraulic cone crushers |
+| 2007–present | **Shanghai Mackorn Minerals (MACKORN 美矿)** — 19 years of design, sales, field feedback and iteration on hydraulic cone crushers |
+
+**What that means for the code, concretely:**
+
+- Vendor parameters come from MACKORN's own product data, not from a third party's materials.
+- Engineering rules of thumb are labelled as ranges and never presented as calibrated values.
+- `mackorn_calibrate` exists so a user can replace the literature default parameters with their own
+  measured sieve analyses — the plugin is built to be corrected by field data, not to sound finished.
+- Gaps return `null` and appear in `warnings[]`. Nothing is filled in to look complete.
+
+## Why a vertical-domain plugin belongs on this list
+
+A survey of 50 entries in the `awesome-dsh-plugin` list (2026-09) shows the catalogue is
+overwhelmingly developer tooling:
+
+```
+ui 8 · security 6 · usage 6 · wsl 4 · memory 4 · workflow 4
+voice 3 · dev 3 · model 3 · browser 2 · tools 2 · market 1 · theme 1 · session 1 · notify 1 · remote 1
+```
+
+`tools` accounts for 2 of those 50, and there is **no entry for mining, minerals processing,
+aggregates, or any other heavy-industry vertical**.
+
+That gap is what this plugin addresses. In this domain, the knowledge an AI actually needs —
+which cavity suits a given feed size, what CSS produces a target P80, how many units a closed
+circuit requires, what the mass balance and circulating load look like, which required data are
+missing and must be asked of the customer — exists today only inside vendor manuals and in
+individual engineers' heads. Putting it behind 19 callable tools makes it available to any AI a
+mining customer already uses, in the language they speak.
+
+The pattern generalises. If dsh acquires one such plugin per industry — each carrying that
+industry's hard constraints, its own calibrated data, and an explicit honesty contract about what
+it does not know — the harness becomes useful well beyond software development.
+
 ## Tool catalog — inputs and outputs
 
 All 19 tools share one input convention: **all parameters are optional except those marked (required)**,
