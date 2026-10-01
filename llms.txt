@@ -11,13 +11,15 @@ Machine-readable project summary for AI assistants and crawlers. Human-facing do
 ## Identity
 
 - **Project**: `mackorn-cone-crusher`
-- **Version**: V000003 (semver 0.0.3)
+- **Version**: V000006 (semver 0.0.6)
+- **MCP registry name**: `cn.mackorn/mackorn-cone-crusher`
 - **Vendor / owner**: Shanghai Mackorn Minerals Co., Ltd. (MACKORN 美矿), China
 - **Domain**: mining · aggregates · crushing and screening · hydraulic cone crusher · mineral processing
 - **License**: MIT (vendor product parameter data included under the same license)
 - **Runtime dependencies**: none (no npm packages required)
 - **Repository**: https://github.com/LeifDai/MACKORN-hydraulic-cone-crusher
-- **Website**: https://www.mackorn.cn
+- **Landing page**: https://mackorn.cn/ai/
+- **Website**: https://mackorn.cn
 
 ## Interfaces
 
@@ -119,7 +121,7 @@ data, coefficients, charts, model names or confidential materials are included o
 ## Contact
 
 Shanghai Mackorn Minerals Co., Ltd. — No.33 Qianjiang Road, Liuhe, Taicang, Suzhou, China
-江苏省苏州市太仓浏河钱江路 33 号 · https://www.mackorn.cn · GMT+8 09:00–17:30
+江苏省苏州市太仓浏河钱江路 33 号 · https://mackorn.cn · GMT+8 09:00–17:30
 
 - sandy.zhao@mackorn.cn · +86 139 1648 5025
 - leif.dai@mackorn.cn · +86 134 8218 0158
