@@ -17,16 +17,15 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { loadDshSdk, assertSupportedJsonSchema, validateJsonSchemaValueFallback } from './sdk-portability.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
 const PLUGIN = join(ROOT, 'plugin');
 
-/** 装配环境里的官方 SDK 绝对路径（本机 DSH 安装位置）。 */
-const DSH_SDK_ROOT = 'D:/AI/npm_global/node_modules/@deepseek-ai/dsh/node_modules/@deepseek-ai';
-
 let pass = 0;
 let fail = 0;
+let skipped = 0;
 const failures = [];
 
 function check(label, condition, detail = '') {
@@ -38,6 +37,11 @@ function check(label, condition, detail = '') {
     failures.push(`${label}${detail ? ' :: ' + detail : ''}`);
     console.log(`  FAIL ${label}${detail ? ' :: ' + detail : ''}`);
   }
+}
+
+function skip(label, why) {
+  skipped += 1;
+  console.log('  skip ' + label + (why ? ' :: ' + why : ''));
 }
 
 function eq(a, b) {
@@ -104,41 +108,38 @@ if (golden) {
 }
 
 console.log('\n=== B. 真实 SDK schema 校验（@deepseek-ai/dsh-tools） ===');
-let sdk = null;
-try {
-  sdk = await import(pathToFileURL(join(DSH_SDK_ROOT, 'dsh-tools/lib/index.js')).href);
-  check('能加载官方 dsh-tools SDK', typeof sdk.assertSupportedJsonSchema === 'function');
-} catch (error) {
-  check('能加载官方 dsh-tools SDK', false, error.message);
-}
+const { sdk, from, tried } = await loadDshSdk();
+const validateSchema = sdk ? (s) => sdk.assertSupportedJsonSchema(s) : (s) => assertSupportedJsonSchema(s);
+const validateValue = sdk ? (s, v, p) => sdk.validateJsonSchemaValue(s, v, p) : (s, v, p) => validateJsonSchemaValueFallback(s, v, p);
+if (sdk) check('能加载官方 dsh-tools SDK', true, from);
+else skip('官方 dsh-tools SDK 不可用，改用内置子集校验器', '探测了 ' + tried.length + ' 个位置');
 
 // 知识库写入测试必须隔离到临时目录，避免污染真实知识库
 process.env.MACKORN_KB_DIR = join(HERE, '.tmp-kb');
 const mod = await import(pathToFileURL(join(PLUGIN, 'index.mjs')).href);
 const defs = mod.toolDefinitions;
 
-if (sdk) {
-  for (const def of defs) {
-    let paramOk = true;
-    let paramDetail = '';
-    try {
-      sdk.assertSupportedJsonSchema(def.parameters);
-    } catch (error) {
-      paramOk = false;
-      paramDetail = error.message;
-    }
-    check(`${def.name} · parameters 落在 dsh schema 子集内`, paramOk, paramDetail);
-
-    let outOk = true;
-    let outDetail = '';
-    try {
-      sdk.assertSupportedJsonSchema(def.output.schema);
-    } catch (error) {
-      outOk = false;
-      outDetail = error.message;
-    }
-    check(`${def.name} · output.schema 落在 dsh schema 子集内`, outOk, outDetail);
+// 用统一的 validateSchema（官方 SDK 优先，缺失时内置校验器），因此不设 if (sdk) 守卫
+for (const def of defs) {
+  let paramOk = true;
+  let paramDetail = '';
+  try {
+    validateSchema(def.parameters);
+  } catch (error) {
+    paramOk = false;
+    paramDetail = error.message;
   }
+  check(`${def.name} · parameters 落在 dsh schema 子集内`, paramOk, paramDetail);
+
+  let outOk = true;
+  let outDetail = '';
+  try {
+    validateSchema(def.output.schema);
+  } catch (error) {
+    outOk = false;
+    outDetail = error.message;
+  }
+  check(`${def.name} · output.schema 落在 dsh schema 子集内`, outOk, outDetail);
 }
 
 console.log('\n=== C. entry 契约与功能冒烟 ===');
@@ -175,8 +176,7 @@ const makeFakeCtx = () => ({
       if (output === undefined || typeof output !== 'object' || typeof output.render !== 'function') {
         throw new TypeError(`tool "${tname}" must declare output { schema, render, presentationMeta? }`);
       }
-      if (!sdk) throw new Error('测试需要 dsh-tools SDK 才能复刻 register 校验');
-      sdk.assertSupportedJsonSchema(output.schema);
+      validateSchema(output.schema);
       if (tname === 'run_code') throw new Error('tool name "run_code" is reserved');
       if (registered.has(tname)) {
         throw new Error(`tool "${tname}" is already registered (for a per-agent variant, register through that agent's \`agent.ctx\` instead)`);
@@ -242,8 +242,8 @@ const samples = {
 for (const def of defs) {
   const sample = samples[def.name];
   try {
-    if (sdk) {
-      const violations = sdk.validateJsonSchemaValue(def.parameters, sample, '');
+    {
+      const violations = validateValue(def.parameters, sample, '');
       if (violations.length > 0) {
         check(`${def.name} · 样本参数通过官方校验`, false, violations.join('; '));
         continue;
@@ -254,7 +254,7 @@ for (const def of defs) {
     const okBlocks = Array.isArray(blocks) && blocks.length > 0 && blocks.every((b) => b.type === 'text' && typeof b.text === 'string' && b.text.length > 0);
     check(`${def.name} · execute + render 产出非空文本`, okBlocks, JSON.stringify(value)?.slice(0, 160));
     if (sdk && value !== null && typeof value === 'object') {
-      const outViolations = sdk.validateJsonSchemaValue(def.output.schema, value, '');
+      const outViolations = validateValue(def.output.schema, value, '');
       check(`${def.name} · 返回值通过 output.schema 校验`, outViolations.length === 0, outViolations.join('; '));
     }
   } catch (error) {
@@ -263,10 +263,10 @@ for (const def of defs) {
 }
 
 console.log('\n=== D. 负控（必须响） ===');
-if (sdk) {
+{
   let threw = false;
   try {
-    sdk.assertSupportedJsonSchema({ type: 'object', properties: { a: { type: 'string', required: true } }, additionalProperties: false });
+    validateSchema({ type: 'object', properties: { a: { type: 'string', required: true } }, additionalProperties: false });
   } catch {
     threw = true;
   }
@@ -274,7 +274,7 @@ if (sdk) {
 
   threw = false;
   try {
-    sdk.assertSupportedJsonSchema({ type: 'string', minLength: 1 });
+    validateSchema({ type: 'string', minLength: 1 });
   } catch {
     threw = true;
   }
@@ -327,19 +327,19 @@ try {
 check('负控7：缺 output.render 的工具定义被 register 契约拒绝', threw);
 
 // 证明 B 段的 schema 校验是"活的"：把任意一个真工具的 parameters 故意改坏必须被拒绝
-if (sdk) {
+{
   threw = false;
   try {
     const broken = JSON.parse(JSON.stringify(defs[0].parameters));
     broken.properties.oops = { type: 'string', maxLength: 3 };
-    sdk.assertSupportedJsonSchema(broken);
+    validateSchema(broken);
   } catch {
     threw = true;
   }
   check('负控8：把真工具 schema 注入子集外关键字后校验失败', threw);
 }
 
-console.log(`\n=== 结果：${pass} 通过 / ${fail} 失败 ===`);
+console.log(`\n=== 结果：${pass} 通过 / ${fail} 失败${skipped ? " / " + skipped + " 跳过" : ""} ===`);
 if (fail > 0) {
   console.log('\n失败明细：');
   for (const f of failures) console.log(` - ${f}`);
