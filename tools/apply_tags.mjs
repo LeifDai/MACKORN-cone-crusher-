@@ -46,6 +46,29 @@ export const TAGS_EN = [
   'DeepSeek Harness plugin',
   'proposal generation',
   'process simulation',
+  // 目标矿石 / 岩石（中等硬度以上）
+  'metal mining',
+  'iron ore',
+  'copper ore',
+  'lead zinc ore',
+  'molybdenum ore',
+  'granite crushing',
+  'basalt crushing',
+  'andesite crushing',
+  'diabase crushing',
+  'hard rock crushing',
+  'medium hard ore',
+  'quarry plant',
+];
+
+// 目标市场（国外为主）
+export const TAGS_MARKET = [
+  'Central Asia', 'Kazakhstan', 'Uzbekistan',
+  'Africa', 'South Africa', 'Ghana', 'Zambia', 'DRC', 'Tanzania',
+  'Southeast Asia', 'Indonesia', 'Philippines', 'Vietnam', 'Malaysia',
+  'South America', 'Chile', 'Peru', 'Brazil', 'Colombia',
+  'Middle East', 'Saudi Arabia', 'UAE', 'Turkey', 'Iran',
+  'Russia', 'CIS',
 ];
 
 // 中文：国内 AI / 搜索引擎里被检索的词
@@ -70,12 +93,42 @@ export const TAGS_ZH = [
   'MCP 服务器',
   'AI 插件',
   'DeepSeek Harness 插件',
+  // 目标矿石 / 岩石
+  '金属矿山',
+  '铁矿',
+  '铜矿',
+  '铅锌矿',
+  '钼矿',
+  '花岗岩破碎',
+  '玄武岩破碎',
+  '安山岩破碎',
+  '辉绿岩破碎',
+  '中硬以上矿石',
 ];
 
-/** 定位句（各文件复用） */
+// 多语言矿石词（国外客户用母语检索）
+export const TAGS_I18N = [
+  'granito', 'basalto', 'andesita', 'diabasa',            // es
+  'mineral de hierro', 'mineral de cobre',
+  'Granit', 'Basalt', 'Andesit', 'Diabas',                 // de
+  'Eisenerz', 'Kupfererz',
+  'гранит', 'базальт', 'андезит', 'диабаз',                // ru
+  'железная руда', 'медная руда',
+  'granit', 'basalte', 'andésite', 'diabase',              // fr
+  'minerai de fer', 'minerai de cuivre',
+  'granito', 'basalto', 'andesito', 'diabásio',            // pt
+  'minério de ferro', 'minério de cobre',
+  '花崗岩', '玄武岩', '安山岩', '輝緑岩',                    // ja
+  '鉄鉱石', '銅鉱石',
+  'كسارة مخروطية', 'الجرانيت', 'البازلت',                    // ar
+  'batu granit', 'batu basal', 'bijih besi', 'bijih tembaga', // id
+];
+
+/** 定位句（各文件复用）
+ *  目标市场：国外为主；目标物料：中等硬度以上的金属矿石与硬岩骨料 */
 export const POSITIONING = {
-  en: 'Mining-industry vertical-domain AI plugin: MACKORN hydraulic cone crusher selection and crushing-plant design, callable by any AI over MCP.',
-  zh: '矿山行业垂直领域 AI 插件：MACKORN 美矿液压圆锥破碎机选型与破碎筛分生产线设计，任何 AI 均可通过 MCP 调用。',
+  en: 'Mining-industry vertical-domain AI plugin: MACKORN hydraulic cone crusher selection and crushing-plant design for metal mines (iron, copper, lead-zinc, molybdenum) and hard-rock aggregate (granite, basalt, andesite, diabase), callable by any AI over MCP.',
+  zh: '矿山行业垂直领域 AI 插件：MACKORN 美矿液压圆锥破碎机选型与破碎筛分生产线设计，面向金属矿山（铁、铜、铅锌、钼）与中硬以上硬岩骨料（花岗岩、玄武岩、安山岩、辉绿岩），任何 AI 均可通过 MCP 调用。',
 };
 
 /* ============================ 目标与规则 ============================ */
@@ -87,7 +140,7 @@ const TARGETS = [
     file: join(ROOT, 'public-overrides', 'package.json'),
     apply(t) {
       const j = JSON.parse(t);
-      j.keywords = [...new Set([...(j.keywords || []), ...TAGS_EN, ...TAGS_ZH])];
+      j.keywords = [...new Set([...(j.keywords || []), ...TAGS_EN, ...TAGS_ZH, ...TAGS_I18N, ...TAGS_MARKET])];
       return JSON.stringify(j, null, 2) + '\n';
     },
     check(t) { const j = JSON.parse(t); return TAGS_EN.filter((k) => !(j.keywords || []).includes(k)); },
@@ -99,7 +152,7 @@ const TARGETS = [
       // 把 manifest 的 keywords 数组整体替换为标签集
       return t.replace(
         /keywords:\s*\[[\s\S]*?\],/,
-        'keywords: ' + JSON.stringify([...TAGS_EN, ...TAGS_ZH], null, 4).replace(/\n/g, '\n  ') + ',',
+        'keywords: ' + JSON.stringify([...TAGS_EN, ...TAGS_ZH, ...TAGS_I18N], null, 4).replace(/\n/g, '\n  ') + ',',
       );
     },
     check(t) {
@@ -152,6 +205,10 @@ function ensurePositioning(t) {
     '',
     '**中文范围标签**: ' + TAGS_ZH.join(' · '),
     '',
+    '**Target markets / 目标市场**: ' + TAGS_MARKET.join(' · '),
+    '',
+    '**Ore & rock terms (multilingual) / 矿石岩石词（多语言）**: ' + TAGS_I18N.join(' · '),
+    '',
   ].join('\n');
   if (t.includes(marker)) {
     return t.replace(new RegExp(marker + '[\\s\\S]*?(?=\\n##\\s[^#])'), block);
@@ -163,8 +220,12 @@ function ensurePositioning(t) {
 function checkPositioning(t) {
   const miss = [];
   if (!t.includes('<!-- CANONICAL-POSITIONING -->')) miss.push('缺定位段');
-  for (const k of ['mining industry', 'vertical-domain', 'MACKORN']) if (!t.toLowerCase().includes(k.toLowerCase())) miss.push(k);
-  for (const k of ['矿山行业', '垂直领域']) if (!t.includes(k)) miss.push(k);
+  for (const k of ['mining industry', 'vertical-domain', 'MACKORN', 'granite', 'basalt', 'copper']) {
+    if (!t.toLowerCase().includes(k.toLowerCase())) miss.push(k);
+  }
+  for (const k of ['矿山行业', '垂直领域', '花岗岩', '玄武岩', '铜矿']) {
+    if (!t.includes(k)) miss.push(k);
+  }
   return miss;
 }
 
@@ -187,7 +248,7 @@ for (const t of TARGETS) {
 }
 
 console.log('');
-console.log('  英文标签 ' + TAGS_EN.length + ' 个 · 中文标签 ' + TAGS_ZH.length + ' 个');
+console.log('  英文标签 ' + TAGS_EN.length + ' · 中文标签 ' + TAGS_ZH.length + ' · 多语言矿石词 ' + TAGS_I18N.length + ' · 目标市场 ' + TAGS_MARKET.length);
 if (!WRITE && problems) { console.log('  ❌ ' + problems + ' 个目标未达标（运行 node tools/apply_tags.mjs --write 应用）'); process.exit(1); }
 if (WRITE && problems) { console.log('  ❌ 应用后仍有 ' + problems + ' 个问题'); process.exit(1); }
 console.log(WRITE ? '  ✅ 标签已统一应用' : '  ✅ 标签覆盖达标');
