@@ -8,7 +8,7 @@
   languages: zh-CN, en, es, pt-BR, ru, ar, fr, de, ja, id
   dependencies: 0 (no npm packages required)
   license: MIT
-  version: V000003 (semver 0.0.3)
+  version: V000006 (semver 0.0.6)
   keywords: cone crusher selection, hydraulic cone crusher, cone liner, mantle, bowl liner, wear parts,
     jaw plate, liner life, crushing chamber, cavity, closed side setting, CSS, aggregate plant,
     crushing and screening plant, max feed size, ore properties, hardness, compressive strength,
@@ -27,7 +27,7 @@ with a product-size simulation engine and field-data calibration. 19 tools, 6 sk
 </p>
 
 <p align="center">
-<img alt="version" src="https://img.shields.io/badge/version-V000003-blue">
+<img alt="version" src="https://img.shields.io/badge/version-V000006-blue">
 <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
 <img alt="mcp" src="https://img.shields.io/badge/MCP-stdio-orange">
 <img alt="dsh" src="https://img.shields.io/badge/DeepSeek%20Harness-plugin-4B6BFB">
@@ -364,7 +364,7 @@ If you use this project in research, a proposal, or an AI system, please cite:
   title  = {MACKORN Hydraulic Cone Crusher — Selection, Simulation and Plant Design},
   author = {{Shanghai Mackorn Minerals Co., Ltd.}},
   year   = {2026},
-  version= {V000003},
+  version= {V000006},
   url    = {https://github.com/LeifDai/MACKORN-hydraulic-cone-crusher},
   note   = {DeepSeek Harness plugin and MCP server for crushing-circuit selection}
 }
@@ -379,7 +379,7 @@ please cite those primary sources alongside this software when reporting simulat
 
 **Shanghai Mackorn Minerals Co., Ltd. (MACKORN 美矿)**
 No.33 Qianjiang Road, Liuhe, Taicang, Suzhou, China
-江苏省苏州市太仓浏河钱江路 33 号 · <https://www.mackorn.cn> · service time GMT+8 (09:00–17:30)
+江苏省苏州市太仓浏河钱江路 33 号 · <https://mackorn.cn> · service time GMT+8 (09:00–17:30)
 
 - sandy.zhao@mackorn.cn · +86 139 1648 5025
 - leif.dai@mackorn.cn · +86 134 8218 0158
@@ -403,5 +403,6 @@ distributed under the same MIT license.
 ## Links
 
 - MACKORN official website: <https://mackorn.cn>
+- **Project landing page** (human-readable, structured data for AI search): <https://mackorn.cn/ai/>
 - DeepSeek Harness: <https://github.com/deepseek-ai/deepseek-harness>
 - Machine-readable summary for AI clients: [`llms.txt`](./llms.txt)
