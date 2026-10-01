@@ -22,7 +22,7 @@ Mining-industry vertical-domain AI plugin: MACKORN hydraulic cone crusher select
 ## Identity
 
 - **Project**: `mackorn-cone-crusher`
-- **Version**: V000007 (semver 0.0.7)
+- **Version**: V000008 (semver 0.0.8)
 - **MCP registry name**: `cn.mackorn/mackorn-cone-crusher`
 - **Vendor / owner**: Shanghai Mackorn Minerals Co., Ltd. (MACKORN 美矿), China
 - **Domain**: mining · aggregates · crushing and screening · hydraulic cone crusher · mineral processing
