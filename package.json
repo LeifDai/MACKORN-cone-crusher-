@@ -1,6 +1,6 @@
 {
   "name": "mackorn-cone-crusher",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "矿山破碎筛分生产线选型：给一张客户需求表 + 一个产量，得到带依据的设备选型、流程仿真、实测标定与方案书（DeepSeek Harness 插件 + MCP 服务器，零依赖）",
   "type": "module",
   "license": "MIT",
