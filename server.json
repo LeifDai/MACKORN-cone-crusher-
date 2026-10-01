@@ -1,10 +1,10 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.LeifDai/mackorn-cone-crusher",
+  "name": "cn.mackorn/mackorn-cone-crusher",
   "description": "Cone crusher and crushing-plant selection for MACKORN NH/NS hydraulic cone crushers. 19 tools.",
   "title": "MACKORN Hydraulic Cone Crusher Selection",
-  "version": "0.0.3",
-  "websiteUrl": "https://www.mackorn.cn",
+  "version": "0.0.6",
+  "websiteUrl": "https://mackorn.cn",
   "repository": {
     "url": "https://github.com/LeifDai/MACKORN-hydraulic-cone-crusher",
     "source": "github"
@@ -13,7 +13,7 @@
     {
       "registryType": "npm",
       "identifier": "mackorn-cone-crusher",
-      "version": "0.0.3",
+      "version": "0.0.6",
       "transport": {
         "type": "stdio"
       }
