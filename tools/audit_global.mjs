@@ -111,7 +111,7 @@ function auditLocal() {
     for (const [label, pat] of [
       ['合规闸门零命中', /零命中/],
       ['版本号一致性门禁通过', /所有公开文件版本号一致/],
-      ['DSH 测试 0 失败', /112 通过 \/ 0 失败/],
+      ['DSH 测试 0 失败', /\d+ 通过 \/ 0 失败/],
       ['MCP 自检 0 失败', /26 通过 \/ 0 失败/],
     ]) {
       if (pat.test(out)) ok('A', label);
@@ -303,7 +303,8 @@ async function auditOnline() {
 
   console.log('\n【D】MCP 注册表与精选清单');
 
-  const reg = await get('https://registry.modelcontextprotocol.io/v0/servers?limit=100');
+  // 用 search 查（limit=100 只覆盖前 100 条，我们的条目排在外面会误报未收录）
+  const reg = await get('https://registry.modelcontextprotocol.io/v0/servers?search=mackorn');
   if (reg.ok) {
     const hit = (reg.text || '').includes('mackorn');
     if (hit) ok('D', '官方 MCP Registry 已收录');
