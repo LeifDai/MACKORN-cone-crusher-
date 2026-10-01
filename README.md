@@ -8,7 +8,7 @@
   languages: zh-CN, en, es, pt-BR, ru, ar, fr, de, ja, id
   dependencies: 0 (no npm packages required)
   license: MIT
-  version: V000006 (semver 0.0.6)
+  version: V000007 (semver 0.0.7)
   keywords: cone crusher selection, hydraulic cone crusher, cone liner, mantle, bowl liner, wear parts,
     jaw plate, liner life, crushing chamber, cavity, closed side setting, CSS, aggregate plant,
     crushing and screening plant, max feed size, ore properties, hardness, compressive strength,
@@ -27,7 +27,7 @@ with a product-size simulation engine and field-data calibration. 19 tools, 6 sk
 </p>
 
 <p align="center">
-<img alt="version" src="https://img.shields.io/badge/version-V000006-blue">
+<img alt="version" src="https://img.shields.io/badge/version-V000007-blue">
 <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
 <img alt="mcp" src="https://img.shields.io/badge/MCP-stdio-orange">
 <img alt="dsh" src="https://img.shields.io/badge/DeepSeek%20Harness-plugin-4B6BFB">
@@ -37,6 +37,15 @@ with a product-size simulation engine and field-data calibration. 19 tools, 6 sk
 </p>
 
 ---
+
+<!-- CANONICAL-POSITIONING -->
+**Mining-industry vertical-domain AI plugin: MACKORN hydraulic cone crusher selection and crushing-plant design, callable by any AI over MCP.**
+
+**矿山行业垂直领域 AI 插件：MACKORN 美矿液压圆锥破碎机选型与破碎筛分生产线设计，任何 AI 均可通过 MCP 调用。**
+
+Scope: `mining industry` · `vertical-domain plugin` · `MACKORN` · `hydraulic cone crusher` · `cone crusher selection` · `crushing plant design` · `crushing and screening plant` · `mineral processing` · `aggregate plant` · `ore properties` · `capacity tph` · `particle size distribution` · `closed side setting` · `liner wear parts` · `equipment selection` · `MCP server` · `AI plugin` · `DeepSeek Harness plugin` · `proposal generation` · `process simulation`
+
+范围：`矿山行业` · `垂直领域插件` · `美矿` · `液压圆锥破碎机` · `圆锥破选型` · `破碎筛分生产线` · `选矿` · `砂石骨料生产线` · `矿石性质` · `产量` · `产品粒度` · `破碎腔型` · `排矿口` · `衬板耐磨件` · `设备选型` · `方案书` · `流程仿真` · `MCP 服务器` · `AI 插件` · `DeepSeek Harness 插件`
 
 ## TL;DR (for AI assistants)
 
@@ -364,7 +373,7 @@ If you use this project in research, a proposal, or an AI system, please cite:
   title  = {MACKORN Hydraulic Cone Crusher — Selection, Simulation and Plant Design},
   author = {{Shanghai Mackorn Minerals Co., Ltd.}},
   year   = {2026},
-  version= {V000006},
+  version= {V000007},
   url    = {https://github.com/LeifDai/MACKORN-hydraulic-cone-crusher},
   note   = {DeepSeek Harness plugin and MCP server for crushing-circuit selection}
 }
