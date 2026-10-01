@@ -8,10 +8,21 @@
 
 Machine-readable project summary for AI assistants and crawlers. Human-facing documentation: [README.md](./README.md)
 
+<!-- CANONICAL-POSITIONING -->
+## Positioning / 定位
+
+Mining-industry vertical-domain AI plugin: MACKORN hydraulic cone crusher selection and crushing-plant design, callable by any AI over MCP.
+
+矿山行业垂直领域 AI 插件：MACKORN 美矿液压圆锥破碎机选型与破碎筛分生产线设计，任何 AI 均可通过 MCP 调用。
+
+**English scope tags**: mining industry · vertical-domain plugin · MACKORN · hydraulic cone crusher · cone crusher selection · crushing plant design · crushing and screening plant · mineral processing · aggregate plant · ore properties · capacity tph · particle size distribution · closed side setting · liner wear parts · equipment selection · MCP server · AI plugin · DeepSeek Harness plugin · proposal generation · process simulation
+
+**中文范围标签**: 矿山行业 · 垂直领域插件 · 美矿 · 液压圆锥破碎机 · 圆锥破选型 · 破碎筛分生产线 · 选矿 · 砂石骨料生产线 · 矿石性质 · 产量 · 产品粒度 · 破碎腔型 · 排矿口 · 衬板耐磨件 · 设备选型 · 方案书 · 流程仿真 · MCP 服务器 · AI 插件 · DeepSeek Harness 插件
+
 ## Identity
 
 - **Project**: `mackorn-cone-crusher`
-- **Version**: V000006 (semver 0.0.6)
+- **Version**: V000007 (semver 0.0.7)
 - **MCP registry name**: `cn.mackorn/mackorn-cone-crusher`
 - **Vendor / owner**: Shanghai Mackorn Minerals Co., Ltd. (MACKORN 美矿), China
 - **Domain**: mining · aggregates · crushing and screening · hydraulic cone crusher · mineral processing
